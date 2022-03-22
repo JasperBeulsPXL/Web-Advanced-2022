@@ -9959,7 +9959,14 @@ let sortedFatties = sortHighToLow(fatties);
 
 renderPokemons(sortedFatties);
 
-console.log(sortedFatties);
+function getPokemonUrlById(id) {
+    return pokemons.find(pokemon => {
+        let url = pokemon.url;
+        let slashIndex = url.indexOf('/', url.length - 4);
+        let urlId = url.substring(slashIndex + 1, url.length - 1);
+        return id === parseInt(urlId);
+    });
+}
 
 function sortHighToLow(array) {
     return array.sort((a, b) => b.weight - a.weight);
@@ -9992,20 +9999,24 @@ function determinePersonality(types) {
             default :
                 typeString += 'dependable';
         }
+        personality += typeString;
     });
     return personality;
 }
 
 function renderPokemons(pokemonArray) {
     pokemonArray.forEach(pokemon => {
-        let chubbyness = pokemon.weight > 800 ? 'chubby' : 'fat';
+        let url = getPokemonUrlById(pokemon.id);
+        let chubbyness = pokemon.weight < 800 ? 'chubby' : 'fat';
         let personality = determinePersonality(pokemon.types);
-        let card = `
-    <div>
+        let card = document.createElement('div');
+        card.innerHTML = `
+        <img src="${pokemon.sprites.front_shiny}" alt="${pokemon.name}" />
         <h2>${pokemon.name}</h2>
-        <p>${pokemon.name} is a ${chubbyness} pokemon. It's personality is ${personality}</p>
-    </div>
+        <h5>${url.url}</h5>
+        <p>${pokemon.name} is a ${chubbyness} pokemon. It's personality is ${personality}.</p>
 `
+        document.querySelector('div.container').appendChild(card);
     })
 
 }

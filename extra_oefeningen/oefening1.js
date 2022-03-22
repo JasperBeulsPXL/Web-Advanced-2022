@@ -7,12 +7,20 @@ const vehicles = [
         imgPath: 'mercedes-amg.jpg'
     },
     {
+        model: 'Kawasaki Ninja 400',
+        license: 'A',
+        odometer: 11500,
+        price: 5500,
+        imgPath: 'kawasaki-ninja.jpg'
+    },
+    {
         model: 'Ford Mondeo',
         license: 'B',
         odometer: 14000,
         price: 30000,
         imgPath: 'ford-mondeo.jpeg'
     },
+
     {
         model: 'Ducati Panigale Superbike',
         license: 'A',
@@ -28,11 +36,11 @@ const vehicles = [
         imgPath: 'ford-fiesta-st.jpg'
     },
     {
-        model: 'Kawasaki Ninja 400',
+        model: 'Ducati Panigale Superbike 2',
         license: 'A',
-        odometer: 11500,
-        price: 5500,
-        imgPath: 'kawasaki-ninja.jpg'
+        odometer: 1000,
+        price: 21999,
+        imgPath: 'ducati-panigale.jpg'
     },
 ];
 
