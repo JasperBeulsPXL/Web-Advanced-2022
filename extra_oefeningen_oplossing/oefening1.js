@@ -46,22 +46,50 @@ const vehicles = [
 let selectedLicense = 'All';
 let selectionChangedCounter = 0;
 
-function orderByModulo() {
-    return vehicles.sort((a, b) => {
-        let charactersInA = a.model.length;
-        let charactersInB = b.model.length;
+createHeaderElements();
+createLicenseSelect();
+createVehicleCards();
 
-        let calculateModuloA = (charactersInA + a.odometer) % selectionChangedCounter;
-        let calculateModuloB = (charactersInB + b.odometer) % selectionChangedCounter;
-        let res = (calculateModuloA < calculateModuloB) ? -1 : (calculateModuloA > calculateModuloB) ? 1 : 0;
+function createHeaderElements() {
+    let h1 = document.createElement('h1');
+    h1.innerText = 'Car finder';
+    document.body.appendChild(h1);
 
-        console.log(`A = ${calculateModuloA}, B = ${calculateModuloB}, result ${res}`)
-        return (calculateModuloA < calculateModuloB) ? -1 : (calculateModuloA > calculateModuloB) ? 1 : 0;
+    let selectLabel = document.createElement('label');
+    selectLabel.for = 'licenseSelect';
+    selectLabel.innerText = 'Driving license ';
+    document.body.appendChild(selectLabel);
+
+}
+
+function createLicenseSelect() {
+    const licenses = ['All', 'A', 'B'];
+
+    let select = document.createElement('select');
+    select.name = 'license';
+
+    // Creëer de options binnen de select en voeg ze toe
+    licenses.forEach(license => {
+        let option = document.createElement('option');
+        option.value = license;
+        option.innerText = license;
+        select.appendChild(option);
     });
+
+    // bind event listener voor het change event
+    select.addEventListener('change', (event) => {
+        selectionChangedCounter++;
+        document.getElementsByClassName('card-container')[0].remove();
+        createVehicleCards();
+    });
+    document.body.appendChild(select);
+
 }
 
 function createVehicleCards() {
-    let vehiclesToRender;
+    let vehiclesToRender = [];
+
+    // Filter en orden de array van objecten die we willen gaan renderen.
     if (selectionChangedCounter < 3) {
         let filteredVehicles = filterVehiclesArray();
         vehiclesToRender = orderFilteredArray(filteredVehicles);
@@ -69,6 +97,7 @@ function createVehicleCards() {
         vehiclesToRender = orderByModulo();
     }
 
+    // Eens we een gefilterde en geordende array hebben kunnen we hierover loopen om per obj een card te renderen.
     let cardContainer = document.createElement('div');
     cardContainer.classList.add('card-container');
     document.body.appendChild(cardContainer);
@@ -96,27 +125,7 @@ function createVehicleCards() {
     });
 }
 
-function createLicenseSelect() {
-    const licenses = ['All', 'A', 'B'];
-
-    let select = document.createElement('select');
-    select.name = 'license';
-
-    licenses.forEach(license => {
-        let option = document.createElement('option');
-        option.value = license;
-        option.innerText = license;
-        select.appendChild(option);
-    });
-    select.addEventListener('change', (event) => {
-        selectionChangedCounter++;
-        document.getElementsByClassName('card-container')[0].remove();
-        createVehicleCards();
-    });
-    document.body.appendChild(select);
-
-}
-
+// Deze functie filterd enkel de voertuigen van het geselecteerde type uit de array.
 function filterVehiclesArray() {
     selectedLicense = document.getElementsByName('license')[0].value;
     if (selectedLicense === 'All') {
@@ -129,6 +138,7 @@ function filterVehiclesArray() {
 
 }
 
+// Deze functie gaat de geselecteerde voertuigen ordenen zoals beschreven in de opgave.
 function orderFilteredArray(filteredArray) {
     let orderedArray = filteredArray; // in geval van 'alle' wordt gewoon de initiële array returned.
 
@@ -151,7 +161,14 @@ function orderFilteredArray(filteredArray) {
     return orderedArray;
 }
 
+// Indien 3x geklikt wordt moet op deze manier geordend worden.
+function orderByModulo() {
+    return vehicles.sort((a, b) => {
+        let charactersInA = a.model.length;
+        let charactersInB = b.model.length;
 
-//createHeaderElements();
-createLicenseSelect();
-createVehicleCards();
+        let calculateModuloA = (charactersInA + a.odometer) % selectionChangedCounter;
+        let calculateModuloB = (charactersInB + b.odometer) % selectionChangedCounter;
+        return (calculateModuloA < calculateModuloB) ? -1 : (calculateModuloA > calculateModuloB) ? 1 : 0;
+    });
+}
