@@ -1,4 +1,4 @@
-const apiUrl = 'https://localhost:44342/api/';
+const apiUrl = 'http://[::1]:44342/api/';
 
 window.onload = function () {
     fetchJSON();
@@ -26,6 +26,8 @@ function fetchJSON() {
         .then(readResponseAsJSON) // (4)
         .then(logResult) // (5)
         .catch(logError); // (6)
+
+    // nog wat code
 }
 
 // Helper functions
@@ -53,6 +55,7 @@ function readResponseAsJSON(response) {
     return response.json(); // (1)
 }
 
+
 function logResult(result) {
     console.log(result);
 }
@@ -70,8 +73,9 @@ Extra info: https://developer.mozilla.org/en-US/docs/Web/API/fetch
 function postRequest() {
     const messageHeaders = new Headers({ // (1)
         'Content-Type': 'application/json'
-    })
-    let newPerson = {studentId: 2, lastName: 'Beuls', firstName: 'Jasper'}
+    });
+
+    let newPerson = {lastName: 'Beuls', firstName: 'Jasper'}
 
     fetch(apiUrl + 'repoStudents', {
         method: 'POST',
