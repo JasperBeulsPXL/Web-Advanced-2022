@@ -1,3 +1,4 @@
+
 const apiUrl = 'http://[::1]:44342/api/';
 
 window.onload = function () {

@@ -21,6 +21,9 @@ function divClickHandler() {
 }
 
 window.onload = function () {
+    let myArray = [];
+    myArray.forEach((element, index) => {
 
+    }
 }
 

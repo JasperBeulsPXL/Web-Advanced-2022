@@ -3,6 +3,10 @@
     <router-link to="/">Home</router-link>
     |
     <router-link to="/about">About</router-link>
+    |
+    <router-link to="/buildings">Buildings</router-link>
+    |
+    <router-link to="/todos">Todos</router-link>
   </nav>
   <router-view/>
 </template>
